@@ -632,6 +632,9 @@ export type CreateSourceRequest = {
     name: string;
     description: string;
     content: string;
+    metadata?: {
+        [key: string]: unknown;
+    } | null;
     global: boolean;
     /**
      * Absolute path to the project root. Required when `global` is false.
@@ -658,6 +661,14 @@ export type SourceEntry = {
     description: string;
     content: string;
     /**
+     * Source-specific frontmatter fields that are not represented by the top-level contract.
+     * For agents, `name` and `description` remain top-level and authoritative;
+     * reserved metadata entries with those keys are ignored on write and omitted on read.
+     */
+    metadata?: {
+        [key: string]: unknown;
+    } | null;
+    /**
      * Absolute path to the source on disk. A directory for skills, a file for
      * recipes and agents.
      */
@@ -677,9 +688,8 @@ export type SourceEntry = {
 /**
  * List discovered sources.
  *
- * Today this endpoint only returns skills. If `type` is omitted, it defaults
- * to listing skill sources. Both global and project-scoped skills are included
- * when `project_dir` is set.
+ * If `type` is omitted, it defaults to listing skill sources. Project-scoped
+ * sources are included when `project_dir` is set.
  */
 export type ListSourcesRequest = {
     type?: SourceType | null;
@@ -699,6 +709,9 @@ export type UpdateSourceRequest = {
     name: string;
     description: string;
     content: string;
+    metadata?: {
+        [key: string]: unknown;
+    } | null;
 };
 
 export type UpdateSourceResponse = {

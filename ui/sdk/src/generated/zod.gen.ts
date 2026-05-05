@@ -628,6 +628,10 @@ export const zCreateSourceRequest = z.object({
     name: z.string(),
     description: z.string(),
     content: z.string(),
+    metadata: z.union([
+        z.record(z.unknown()),
+        z.null()
+    ]).optional(),
     global: z.boolean(),
     projectDir: z.union([
         z.string(),
@@ -644,6 +648,10 @@ export const zSourceEntry = z.object({
     name: z.string(),
     description: z.string(),
     content: z.string(),
+    metadata: z.union([
+        z.record(z.unknown()),
+        z.null()
+    ]).optional(),
     directory: z.string(),
     global: z.boolean(),
     supportingFiles: z.array(z.string()).optional()
@@ -656,9 +664,8 @@ export const zCreateSourceResponse = z.object({
 /**
  * List discovered sources.
  *
- * Today this endpoint only returns skills. If `type` is omitted, it defaults
- * to listing skill sources. Both global and project-scoped skills are included
- * when `project_dir` is set.
+ * If `type` is omitted, it defaults to listing skill sources. Project-scoped
+ * sources are included when `project_dir` is set.
  */
 export const zListSourcesRequest = z.object({
     type: z.union([
@@ -683,7 +690,11 @@ export const zUpdateSourceRequest = z.object({
     path: z.string(),
     name: z.string(),
     description: z.string(),
-    content: z.string()
+    content: z.string(),
+    metadata: z.union([
+        z.record(z.unknown()),
+        z.null()
+    ]).optional()
 });
 
 export const zUpdateSourceResponse = z.object({

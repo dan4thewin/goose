@@ -1509,6 +1509,13 @@
         "content": {
           "type": "string"
         },
+        "metadata": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {}
+        },
         "global": {
           "type": "boolean"
         },
@@ -1570,6 +1577,14 @@
         "content": {
           "type": "string"
         },
+        "metadata": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {},
+          "description": "Source-specific frontmatter fields that are not represented by the top-level contract.\nFor agents, `name` and `description` remain top-level and authoritative;\nreserved metadata entries with those keys are ignored on write and omitted on read."
+        },
         "directory": {
           "type": "string",
           "description": "Absolute path to the source on disk. A directory for skills, a file for\nrecipes and agents."
@@ -1616,7 +1631,7 @@
           ]
         }
       },
-      "description": "List discovered sources.\n\nToday this endpoint only returns skills. If `type` is omitted, it defaults\nto listing skill sources. Both global and project-scoped skills are included\nwhen `project_dir` is set.",
+      "description": "List discovered sources.\n\nIf `type` is omitted, it defaults to listing skill sources. Project-scoped\nsources are included when `project_dir` is set.",
       "x-side": "agent",
       "x-method": "_goose/sources/list"
     },
@@ -1653,6 +1668,13 @@
         },
         "content": {
           "type": "string"
+        },
+        "metadata": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": {}
         }
       },
       "required": [
